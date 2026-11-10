@@ -8,15 +8,6 @@
         src: "/var/lib/jenkins/workspace/ansible-jenkins-pipeline/"
         dest: "~/project"
 
-    - name: Build docker image
-      community.docker.docker_image:
-        name: mico
-        tag: latest
-        source: build
-        build:
-          path: "~/project"
-        state: present
-
     - name: Stop container
       community.docker.docker_container:
         name: mico-container
@@ -28,6 +19,21 @@
         name: mico-container
         image: mico:latest
         state: absent
+
+    - name: Elimina docker image
+      community.docker.docker_image:
+        name: mico
+        tag: latest
+        state: absent
+        
+    - name: Build docker image
+      community.docker.docker_image:
+        name: mico
+        tag: latest
+        source: build
+        build:
+          path: "~/project"
+        state: present
 
     - name: Creazione container
       community.docker.docker_container:

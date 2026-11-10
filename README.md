@@ -1,5 +1,8 @@
 # Automated CI/CD Pipeline with Jenkins, Ansible, Docker & GitHub Webhooks on AWS
 
+<img width="1123" height="483" alt="cicd pipeline ansible" src="https://github.com/user-attachments/assets/ac04c51a-40e7-41ef-a4fd-79c823e40028" />
+
+
 ## 📌 Project Overview
 
 This repository demonstrates the end-to-end implementation of an automated Continuous Integration and Continuous Deployment (CI/CD) pipeline.

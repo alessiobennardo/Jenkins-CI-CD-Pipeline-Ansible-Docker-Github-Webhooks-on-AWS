@@ -146,6 +146,18 @@ target_server ansible_host=<TARGET_EC2_IP> ansible_user=ubuntu ansible_ssh_priva
           path: "~/project"
         state: present
 
+    - name: Stop container
+      community.docker.docker_container:
+        name: mico-container
+        image: mico:latest
+        state: stopped
+
+    - name: Eliminazione container
+      community.docker.docker_container:
+        name: mico-container
+        image: mico:latest
+        state: absent
+
     - name: Creazione container
       community.docker.docker_container:
         name: mico-container
@@ -153,8 +165,7 @@ target_server ansible_host=<TARGET_EC2_IP> ansible_user=ubuntu ansible_ssh_priva
         pull: false
         state: started
         restart_policy: always
-        # published_ports:
-        #   - "80:80"  # Decommenta e adatta se necessario
+        published_ports:
           - "80:80"
 
 ```

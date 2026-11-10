@@ -17,6 +17,18 @@
           path: "~/project"
         state: present
 
+    - name: Stop container
+      community.docker.docker_container:
+        name: mico-container
+        image: mico:latest
+        state: stopped
+
+    - name: Eliminazione container
+      community.docker.docker_container:
+        name: mico-container
+        image: mico:latest
+        state: absent
+
     - name: Creazione container
       community.docker.docker_container:
         name: mico-container
@@ -24,5 +36,5 @@
         pull: false
         state: started
         restart_policy: always
-        # published_ports:
-        #   - "80:80"  # Decommenta e adatta se necessario
+        published_ports:
+          - "80:80"

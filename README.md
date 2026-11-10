@@ -137,15 +137,6 @@ target_server ansible_host=<TARGET_EC2_IP> ansible_user=ubuntu ansible_ssh_priva
         src: "/var/lib/jenkins/workspace/ansible-jenkins-pipeline/"
         dest: "~/project"
 
-    - name: Build docker image
-      community.docker.docker_image:
-        name: mico
-        tag: latest
-        source: build
-        build:
-          path: "~/project"
-        state: present
-
     - name: Stop container
       community.docker.docker_container:
         name: mico-container
@@ -158,6 +149,21 @@ target_server ansible_host=<TARGET_EC2_IP> ansible_user=ubuntu ansible_ssh_priva
         image: mico:latest
         state: absent
 
+    - name: Elimina docker image
+      community.docker.docker_image:
+        name: mico
+        tag: latest
+        state: absent
+        
+    - name: Build docker image
+      community.docker.docker_image:
+        name: mico
+        tag: latest
+        source: build
+        build:
+          path: "~/project"
+        state: present
+
     - name: Creazione container
       community.docker.docker_container:
         name: mico-container
@@ -166,7 +172,7 @@ target_server ansible_host=<TARGET_EC2_IP> ansible_user=ubuntu ansible_ssh_priva
         state: started
         restart_policy: always
         published_ports:
-          - "80:80"
+          - "80:80" 
 
 ```
 

@@ -1,0 +1,28 @@
+- name: Build and deploy docker container
+  hosts: dockerservers
+  gather_facts: false
+  remote_user: root
+  tasks:
+    - name: Copia il file sul server remoto
+      ansible.builtin.synchronize:
+        src: "/var/lib/jenkins/workspace/ansible-jenkins-pipeline/"
+        dest: "~/project"
+
+    - name: Build docker image
+      community.docker.docker_image:
+        name: mico
+        tag: latest
+        source: build
+        build:
+          path: "~/project"
+        state: present
+
+    - name: Creazione container
+      community.docker.docker_container:
+        name: mico-container
+        image: mico:latest
+        pull: false
+        state: started
+        restart_policy: always
+        # published_ports:
+        #   - "80:80"  # Decommenta e adatta se necessario
